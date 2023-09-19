@@ -84,7 +84,6 @@ export default function SignUpProfessional({
                     name={field}
                     ref={confirmRef}
                     onChange={() => {
-                      console.log(info.password === confirmRef.current?.value);
                       if (confirmRef.current) confirmRef.current.value;
                     }}
                   />

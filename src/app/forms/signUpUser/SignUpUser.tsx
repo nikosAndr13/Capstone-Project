@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useState, useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { Input } from "../../../components/Input";
 import toast, { Toaster } from "react-hot-toast";
@@ -20,6 +20,8 @@ export default function SignUp() {
     name: "",
   });
   const { register } = useAuth();
+  const confirmRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <>
       <div className="flex justify-center items-center h-[97vh] flex-wrap ">
@@ -35,18 +37,35 @@ export default function SignUp() {
             Create your account now
           </h1>
           {fields.map((field) => {
-            return (
-              <Fragment key={field}>
-                <Input
-                  name={field}
-                  errorM={"required"}
-                  onChange={(e) => {
-                    const { name, value } = e.target;
-                    setInfo((prev) => ({ ...prev, [name]: value.trim() }));
-                  }}
-                />
-              </Fragment>
-            );
+            if (field !== "Confirm Password") {
+              return (
+                <Fragment key={field}>
+                  <Input
+                    name={field}
+                    errorM={"required"}
+                    onChange={(e) => {
+                      const { name, value } = e.target;
+                      setInfo((prev) => ({ ...prev, [name]: value.trim() }));
+                    }}
+                  />
+                </Fragment>
+              );
+            } else {
+              return (
+                <Fragment key={field}>
+                  <input
+                    className="border-2 p-2 outline-none w-96 rounded-md md:shrink-0 inputWidth"
+                    type="password"
+                    placeholder={field}
+                    name={field}
+                    ref={confirmRef}
+                    onChange={() => {
+                      if (confirmRef.current) confirmRef.current.value;
+                    }}
+                  />
+                </Fragment>
+              );
+            }
           })}
           <button
             type="submit"

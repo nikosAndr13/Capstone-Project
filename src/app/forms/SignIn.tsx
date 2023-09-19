@@ -3,7 +3,7 @@
 import { Fragment, useState } from "react";
 import { Input } from "@/components/Input";
 import { useAuth } from "@/hooks/useAuth";
-
+import { Toaster } from "react-hot-toast";
 const fields = ["email", "password"] as const;
 
 export interface Inputs {
@@ -22,6 +22,7 @@ export default function SignIn() {
   return (
     <>
       <div className="flex justify-center items-center h-[100vh] flex-wrap ">
+        <Toaster />
         <form
           className="flex flex-col border-2 p-6 rounded-md flex-wrap justify-evenly form gap-6 "
           onSubmit={(e) => {
