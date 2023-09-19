@@ -6,6 +6,12 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --marquee-width: 90vw;
+  --marquee-height: 25vh;
+  --marquee-elements-displayed: 5;
+  --marquee-elements: 10;
+  --marquee-element-width: 120px;
+  --marquee-duration-animation: calc(10s);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,12 +22,137 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.input_radio {
+  width: 20px;
+  height: 20px;
+}
+
+.background {
+  background-image: url("../../assets/background.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.marquee {
+  width: var(--marquee-width);
+  height: var(--marquee-height);
+  margin: 2rem auto;
+  overflow: hidden;
+}
+
+.marquee-content {
+  list-style: none;
+  display: flex;
+  gap: 7rem;
+  justify-content: space-evenly;
+  height: 100%;
+  animation: scrolling var(--marquee-duration-animation) linear 1;
+}
+
+.marquee-content img {
+  width: var(--marquee-element-width);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100%;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.marquee:before,
+.marquee:after {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  content: "";
+  z-index: 1;
+  width: 10rem;
+}
+
+@keyframes scrolling {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(
+      calc(-1 * var(--marquee-element-width) * var(--marquee-elements))
+    );
+    opacity: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .form {
+    height: 90vh;
+    max-width: 100%;
+    width: 90%;
+    display: flex;
+  }
+
+  .inputWidth {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .fadeOut {
+    opacity: 0;
+  }
 }
