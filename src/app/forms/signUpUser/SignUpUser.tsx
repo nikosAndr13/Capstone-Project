@@ -30,7 +30,11 @@ export default function SignUp() {
           className="flex flex-col items-center border-2 p-6 rounded-md flex-wrap justify-evenly form gap-6 "
           onSubmit={(e) => {
             e.preventDefault();
-            register(info);
+            if (info.password === confirmRef.current?.value) {
+              register(info);
+            } else {
+              toast.error("Passwords Do not match");
+            }
           }}
         >
           <h1 className="text-3xl font-semibold mb-6 ">
